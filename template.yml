@@ -1,0 +1,70 @@
+
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  Replace with project's description
+
+Transform:
+  - AWS::Serverless-2016-10-31
+
+Parameters:
+  environment:
+    Type: String
+    Description: Environment to use
+    Default: local
+  serviceName:
+    Type: String
+    Default: -ReplaceWithProjectTitle-Production
+
+Globals:
+  Function:
+    Runtime: nodejs12.x
+    Timeout: 180
+    Environment:
+      Variables:
+        ENVIRONMENT: !Ref environment
+        DYNAMO_DB_ENDPOINT: http://localhost:8000
+        TABLE_NAME: !Join ["-", [!Ref environment, "-ReplaceWithProjectTitle-"]]
+        SERVICE_NAME: !Ref serviceName
+
+Resources:
+  # API Gateway
+  -ReplaceWithProjectTitle-LambdaAPIProd:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: !Ref environment
+      Cors:
+        AllowMethods: "'POST, GET, PUT, DELETE, OPTIONS'"
+        AllowHeaders: "'*'"
+        AllowOrigin: "'https://replace-with-project-domain.com'"
+        #AllowOrigin: "'*'"
+        AllowCredentials : true
+      Auth:
+        DefaultAuthorizer: replace-with-project-authorizer
+        AddDefaultAuthorizerToCorsPreflight: false
+        Authorizers:
+          replace-with-project-authorizer:
+            UserPoolArn: replace-with-project-user-pool-arn
+            AuthType: "COGNITO_USER_POOLS"
+            Identity:
+              Headers:
+                - Authorization
+              ReauthorizeEvery: 30
+
+  # IAM Role
+  -ReplaceWithProjectTitle-LambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Action:
+              - "sts:AssumeRole"
+            Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+        - arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
+        - arn:aws:iam::aws:policy/AmazonAPIGatewayInvokeFullAccess
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess

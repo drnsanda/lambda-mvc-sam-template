@@ -1,0 +1,1 @@
+export default class { message: string; response: any; statusCode: number; }

@@ -1,0 +1,11 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "your-project-nameProduction"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-107"
+s3_prefix = "your-project-nameProduction"
+region = "us-east-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "environment=\"prod\" serviceName=\"your-project-nameProduction\""

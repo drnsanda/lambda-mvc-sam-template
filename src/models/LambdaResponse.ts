@@ -1,0 +1,1 @@
+export default class { statusCode: number; body: string; }

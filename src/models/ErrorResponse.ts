@@ -1,0 +1,1 @@
+export default class { code: string; error: any; exception: string; message: string; statusCode: number; }

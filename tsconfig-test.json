@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "outDir": "./tests",
+        "target": "ES2017",
+        "allowJs": false,
+        "allowSyntheticDefaultImports": true,
+        "moduleResolution": "node",
+        "noImplicitAny": false,
+        "skipLibCheck": true,
+        "sourceMap": true,
+        "strictNullChecks": false,
+        "resolveJsonModule": true,
+        "preserveConstEnums": true
+    },
+    "include": ["src/tests/*"],
+    "exclude": ["src/handlers/*", "src/utils/*"]
+}
